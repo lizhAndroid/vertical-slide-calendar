@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/86187/Downloads/SlidingCalendar-master/SlidingCalendar-master/app/src/main/res/drawable/bg_calendar_select.xml" value="0.13489583333333333" />
+        <entry key="..\:/Users/86187/Downloads/SlidingCalendar-master/SlidingCalendar-master/app/src/main/res/drawable/bg_calendar_select_mid.xml" value="0.13489583333333333" />
+        <entry key="..\:/Users/86187/Downloads/SlidingCalendar-master/SlidingCalendar-master/app/src/main/res/layout/activity_main.xml" value="0.24479166666666666" />
+        <entry key="..\:/Users/86187/Downloads/SlidingCalendar-master/SlidingCalendar-master/app/src/main/res/layout/activity_select_date.xml" value="0.11875" />
+        <entry key="..\:/Users/86187/Downloads/SlidingCalendar-master/SlidingCalendar-master/app/src/main/res/layout/item_calendar_blank.xml" value="0.11875" />
+        <entry key="..\:/Users/86187/Downloads/SlidingCalendar-master/SlidingCalendar-master/app/src/main/res/layout/item_calendar_date.xml" value="0.2" />
+        <entry key="..\:/Users/86187/Downloads/SlidingCalendar-master/SlidingCalendar-master/app/src/main/res/layout/item_calendar_title.xml" value="0.11875" />
+        <entry key="..\:/Users/86187/Downloads/SlidingCalendar-master/SlidingCalendar-master/slide-calendar/src/main/res/drawable/bg_calendar_select_mid.xml" value="0.13541666666666666" />
+        <entry key="..\:/Users/86187/Downloads/SlidingCalendar-master/SlidingCalendar-master/slide-calendar/src/main/res/layout/item_calendar_title.xml" value="0.11927083333333334" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

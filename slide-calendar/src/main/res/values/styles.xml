@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--自定义滑动日历-->
+    <declare-styleable name="SlidingCalendar">
+        <attr name="showWeek" format="boolean"/>
+
+    </declare-styleable>
+</resources>
