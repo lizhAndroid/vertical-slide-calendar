@@ -3,17 +3,16 @@ package com.example.slide_calendar.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.slide_calendar.R;
 import com.example.slide_calendar.bean.DateInfoBean;
@@ -570,6 +569,7 @@ public class SlidingCalendarView extends LinearLayout {
     }
 
     public DateInfoBean getStartBean() {
+        if (mStartBean == null) mStartBean = getFirstSelectDay();
         return mStartBean;
     }
 
