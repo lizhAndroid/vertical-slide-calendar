@@ -128,9 +128,6 @@ public class DateAdpater extends RecyclerView.Adapter<DateAdpater.ViewHolder> {
                             && bean.getDate() > Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) {
                         viewHolder.itemView.setEnabled(false);
                         viewHolder.tvDay.setTextColor(mContext.getResources().getColor(R.color.colorLine));
-                    } else {
-                        viewHolder.itemView.setEnabled(true);
-                        viewHolder.tvDay.setTextColor(mContext.getResources().getColor(R.color.colorBlack));
                     }
                 }
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
