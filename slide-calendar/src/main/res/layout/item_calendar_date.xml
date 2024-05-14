@@ -19,7 +19,7 @@
             android:layout_centerInParent="true"
             android:textSize="14sp"
             tools:text="1"
-            tools:textColor="#535563" />
+            tools:textColor="@color/colorBlack" />
 
         <TextView
             android:id="@+id/tv_state"
@@ -29,7 +29,7 @@
             android:layout_centerHorizontal="true"
             android:textSize="12sp"
             tools:text="开始"
-            tools:textColor="#535563" />
+            tools:textColor="@color/colorBlack" />
 
     </RelativeLayout>
 

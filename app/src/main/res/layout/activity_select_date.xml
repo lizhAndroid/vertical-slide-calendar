@@ -10,6 +10,7 @@
     <com.example.slide_calendar.view.SlidingCalendarView
         android:id="@+id/scv_main"
         app:showWeek="true"
+        app:isFutureEnable="true"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

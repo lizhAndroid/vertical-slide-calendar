@@ -27,11 +27,11 @@ import java.util.List;
 public class SlidingCalendarView extends LinearLayout {
     //最大区间
     public static final int MAX_RANGE = 31;
-    //最多显示月 = 当前月+下个月+之前若干个月
-    public static final int MAX_MONTH_COUNT = 122;
+    //最多显示月 = 当前月+之前若干个月
+    public static final int MAX_MONTH_COUNT = 121;
 
     private Context mContext;
-    private boolean isShowWeek;
+    private boolean isShowWeek, isFutureEnable;
     private GridLayoutManager mLayoutManager;
     private RecyclerView mDateView;
 
@@ -58,10 +58,22 @@ public class SlidingCalendarView extends LinearLayout {
         this.mContext = context;
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SlidingCalendar);
         isShowWeek = typedArray.getBoolean(R.styleable.SlidingCalendar_showWeek, true);
+        isFutureEnable = typedArray.getBoolean(R.styleable.SlidingCalendar_isFutureEnable, false);
         setBackgroundColor(getResources().getColor(R.color.colorWhite));
         typedArray.recycle();
 
         init();
+    }
+
+    public boolean isFutureEnable() {
+        return isFutureEnable;
+    }
+
+    public void setFutureEnable(boolean futureEnable) {
+        isFutureEnable = futureEnable;
+        if (mAdapter != null) {
+            mAdapter.setFutureEnable(futureEnable);
+        }
     }
 
     public boolean isAllowRange() {
@@ -138,7 +150,7 @@ public class SlidingCalendarView extends LinearLayout {
             }
         }));
 
-        mAdapter = new DateAdpater(mContext, mList);
+        mAdapter = new DateAdpater(mContext, mList, isFutureEnable);
         mAdapter.setListener(new DateAdpater.OnClickDayListener() {
             @Override
             public void onClickDay(View view, DateInfoBean bean, int position) {
@@ -211,7 +223,7 @@ public class SlidingCalendarView extends LinearLayout {
 
         //设置月份
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, -MAX_MONTH_COUNT + 2);
+        calendar.add(Calendar.MONTH, -MAX_MONTH_COUNT + 1);
         for (int i = 0; i < MAX_MONTH_COUNT; i++) {
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH) + 1;
