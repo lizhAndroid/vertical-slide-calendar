@@ -4,6 +4,9 @@
     <declare-styleable name="SlidingCalendar">
         <attr name="showWeek" format="boolean"/>
         <attr name="isFutureEnable" format="boolean"/>
+        <attr name="passMonths" format="integer"/>
+        <attr name="futureMonths" format="integer"/>
+        <attr name="maxRange" format="integer"/>
 
     </declare-styleable>
 </resources>

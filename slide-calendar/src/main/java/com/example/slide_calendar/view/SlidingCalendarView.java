@@ -26,9 +26,10 @@ import java.util.List;
 
 public class SlidingCalendarView extends LinearLayout {
     //最大区间
-    public static final int MAX_RANGE = 31;
-    //最多显示月 = 当前月+之前若干个月
-    public static final int MAX_MONTH_COUNT = 121;
+    private  int maxRange = 31;
+    //最多显示月 = 当前月+之前若干个月+后面几个月
+    private int passMonths = 121;
+    private int futureMonths = 3;
 
     private Context mContext;
     private boolean isShowWeek, isFutureEnable;
@@ -59,6 +60,9 @@ public class SlidingCalendarView extends LinearLayout {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SlidingCalendar);
         isShowWeek = typedArray.getBoolean(R.styleable.SlidingCalendar_showWeek, true);
         isFutureEnable = typedArray.getBoolean(R.styleable.SlidingCalendar_isFutureEnable, false);
+        passMonths = typedArray.getInt(R.styleable.SlidingCalendar_passMonths, passMonths);
+        futureMonths = typedArray.getInt(R.styleable.SlidingCalendar_futureMonths, futureMonths);
+        maxRange=typedArray.getInt(R.styleable.SlidingCalendar_maxRange,maxRange);
         setBackgroundColor(getResources().getColor(R.color.colorWhite));
         typedArray.recycle();
 
@@ -74,6 +78,7 @@ public class SlidingCalendarView extends LinearLayout {
         if (mAdapter != null) {
             mAdapter.setFutureEnable(futureEnable);
         }
+        init();
     }
 
     public boolean isAllowRange() {
@@ -88,6 +93,9 @@ public class SlidingCalendarView extends LinearLayout {
     }
 
     private void init() {
+        removeAllViews();
+        if (mList != null && !mList.isEmpty())
+            mList.clear();
         if (isShowWeek) {
             addHeadView();
         }
@@ -210,8 +218,13 @@ public class SlidingCalendarView extends LinearLayout {
 
         addView(mDateView);
 
-        //滑动到当前月，即最后一项
-        mDateView.scrollToPosition(mList.size() - 1);
+        //滑动到当前月
+        for (int i = 0; i < mList.size(); i++) {
+            if (mList.get(i).getMonth()== Calendar.getInstance().get(Calendar.MONTH)) {
+                mDateView.scrollToPosition(i);
+                return;
+            }
+        }
     }
 
     /**
@@ -223,8 +236,8 @@ public class SlidingCalendarView extends LinearLayout {
 
         //设置月份
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, -MAX_MONTH_COUNT + 1);
-        for (int i = 0; i < MAX_MONTH_COUNT; i++) {
+        calendar.add(Calendar.MONTH, -passMonths + 1);
+        for (int i = 0; i < passMonths; i++) {
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH) + 1;
             MonthInfoBean bean = new MonthInfoBean();
@@ -233,6 +246,18 @@ public class SlidingCalendarView extends LinearLayout {
             monthList.add(bean);
 
             calendar.add(Calendar.MONTH, 1);
+        }
+        if (isFutureEnable) {
+            for (int i = 0; i < futureMonths; i++) {
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH) + 1;
+                MonthInfoBean bean = new MonthInfoBean();
+                bean.setYear(year);
+                bean.setMonth(month);
+                monthList.add(bean);
+
+                calendar.add(Calendar.MONTH, 1);
+            }
         }
         //设置日期
         calendar = Calendar.getInstance();
@@ -397,7 +422,6 @@ public class SlidingCalendarView extends LinearLayout {
             //后天
             bean.setRecentDay(true);
             bean.setRecentDayName(DateInfoBean.STR_RECENT_ACQUIRED);
-            return;
         }
     }
 
@@ -457,7 +481,7 @@ public class SlidingCalendarView extends LinearLayout {
         long firstLongTime = AppDateTools.getStringToDate(firstBean.dateToString());
         long selectLongTime = AppDateTools.getStringToDate(bean.dateToString());
         long diffLongTime = selectLongTime - firstLongTime;
-        if (AppDateTools.diffTime2diffDay(Math.abs(diffLongTime)) > MAX_RANGE) {
+        if (AppDateTools.diffTime2diffDay(Math.abs(diffLongTime)) > maxRange) {
             return -1;
         }
         return selectLongTime - firstLongTime > 0 ? 1 : 0;
