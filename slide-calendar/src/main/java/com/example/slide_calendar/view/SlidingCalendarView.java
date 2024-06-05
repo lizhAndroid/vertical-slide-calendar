@@ -26,7 +26,7 @@ import java.util.List;
 
 public class SlidingCalendarView extends LinearLayout {
     //最大区间
-    private  int maxRange = 31;
+    private int maxRange = 31;
     //最多显示月 = 当前月+之前若干个月+后面几个月
     private int passMonths = 121;
     private int futureMonths = 3;
@@ -62,7 +62,7 @@ public class SlidingCalendarView extends LinearLayout {
         isFutureEnable = typedArray.getBoolean(R.styleable.SlidingCalendar_isFutureEnable, false);
         passMonths = typedArray.getInt(R.styleable.SlidingCalendar_passMonths, passMonths);
         futureMonths = typedArray.getInt(R.styleable.SlidingCalendar_futureMonths, futureMonths);
-        maxRange=typedArray.getInt(R.styleable.SlidingCalendar_maxRange,maxRange);
+        maxRange = typedArray.getInt(R.styleable.SlidingCalendar_maxRange, maxRange);
         setBackgroundColor(getResources().getColor(R.color.colorWhite));
         typedArray.recycle();
 
@@ -220,7 +220,9 @@ public class SlidingCalendarView extends LinearLayout {
 
         //滑动到当前月
         for (int i = 0; i < mList.size(); i++) {
-            if (mList.get(i).getMonth()== Calendar.getInstance().get(Calendar.MONTH)) {
+            DateInfoBean dateInfoBean = mList.get(i);
+            if (dateInfoBean.getMonth() == Calendar.getInstance().get(Calendar.MONTH)
+                    && dateInfoBean.getYear() == Calendar.getInstance().get(Calendar.YEAR)) {
                 mDateView.scrollToPosition(i);
                 return;
             }
