@@ -22,9 +22,19 @@ public class DateAdpater extends RecyclerView.Adapter<DateAdpater.ViewHolder> {
     private List<DateInfoBean> mList;
     private OnClickDayListener mListener;
     private boolean mIsFutureEnable;
+    private boolean mIsPassEnable;
 
     public boolean isFutureEnable() {
         return mIsFutureEnable;
+    }
+
+    public boolean isPassEnable() {
+        return mIsPassEnable;
+    }
+
+    public void setPassEnable(boolean passEnable) {
+        mIsPassEnable = passEnable;
+        notifyDataSetChanged();
     }
 
     public void setFutureEnable(boolean futureEnable) {
@@ -32,10 +42,11 @@ public class DateAdpater extends RecyclerView.Adapter<DateAdpater.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public DateAdpater(Context context, List<DateInfoBean> list, boolean isFutureEnable) {
+    public DateAdpater(Context context, List<DateInfoBean> list, boolean isFutureEnable,boolean isPassEnable) {
         mContext = context;
         mList = list;
         mIsFutureEnable = isFutureEnable;
+        mIsPassEnable=isPassEnable;
     }
 
     public void setListener(OnClickDayListener listener) {
@@ -76,12 +87,13 @@ public class DateAdpater extends RecyclerView.Adapter<DateAdpater.ViewHolder> {
             case DateInfoBean.TYPE_DATE_NORMAL:
             default:
                 //日期
+                int date = bean.getDate();
                 if (bean.isRecentDay()) {
                     viewHolder.tvDay.setText(bean.getRecentDayName());
-                } else if (bean.getDate() <= 0) {
+                } else if (date <= 0) {
                     viewHolder.tvDay.setText("");
                 } else {
-                    viewHolder.tvDay.setText(String.valueOf(bean.getDate()));
+                    viewHolder.tvDay.setText(String.valueOf(date));
                 }
 
                 viewHolder.tvState.setText(bean.getFestival());
@@ -122,12 +134,27 @@ public class DateAdpater extends RecyclerView.Adapter<DateAdpater.ViewHolder> {
                     viewHolder.tvState.setTextColor(mContext.getResources().getColor(R.color.colorText));
 
                 }
+                int year = bean.getYear();
+                int month = bean.getMonth();
+                int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+                int currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
+                int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
                 if (!mIsFutureEnable) {
-                    if (bean.getYear() >= Calendar.getInstance().get(Calendar.YEAR)
-                            && bean.getMonth() >= (Calendar.getInstance().get(Calendar.MONTH) + 1)
-                            && bean.getDate() > Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) {
+                    if (year >= currentYear
+                            && month >= currentMonth
+                            && date > currentDay) {
                         viewHolder.itemView.setEnabled(false);
                         viewHolder.tvDay.setTextColor(mContext.getResources().getColor(R.color.colorLine));
+                        viewHolder.tvState.setTextColor(mContext.getResources().getColor(R.color.colorLine));
+                    }
+                }
+                if (!mIsPassEnable){
+                    if (year < currentYear
+                            || month < currentMonth
+                            || (year==currentYear&&month==currentMonth&&date < currentDay)) {
+                        viewHolder.itemView.setEnabled(false);
+                        viewHolder.tvDay.setTextColor(mContext.getResources().getColor(R.color.colorLine));
+                        viewHolder.tvState.setTextColor(mContext.getResources().getColor(R.color.colorLine));
                     }
                 }
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

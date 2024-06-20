@@ -32,7 +32,7 @@ public class SlidingCalendarView extends LinearLayout {
     private int futureMonths = 3;
 
     private Context mContext;
-    private boolean isShowWeek, isFutureEnable;
+    private boolean isShowWeek, isFutureEnable,isPassEnable;
     private GridLayoutManager mLayoutManager;
     private RecyclerView mDateView;
 
@@ -59,7 +59,8 @@ public class SlidingCalendarView extends LinearLayout {
         this.mContext = context;
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SlidingCalendar);
         isShowWeek = typedArray.getBoolean(R.styleable.SlidingCalendar_showWeek, true);
-        isFutureEnable = typedArray.getBoolean(R.styleable.SlidingCalendar_isFutureEnable, false);
+        isFutureEnable = typedArray.getBoolean(R.styleable.SlidingCalendar_isFutureEnable, true);
+        isPassEnable = typedArray.getBoolean(R.styleable.SlidingCalendar_isPassEnable, true);
         passMonths = typedArray.getInt(R.styleable.SlidingCalendar_passMonths, passMonths);
         futureMonths = typedArray.getInt(R.styleable.SlidingCalendar_futureMonths, futureMonths);
         maxRange = typedArray.getInt(R.styleable.SlidingCalendar_maxRange, maxRange);
@@ -67,6 +68,17 @@ public class SlidingCalendarView extends LinearLayout {
         typedArray.recycle();
 
         init();
+    }
+
+    public boolean isPassEnable() {
+        return isPassEnable;
+    }
+
+    public void setPassEnable(boolean passEnable) {
+        isPassEnable = passEnable;
+        if (mAdapter != null) {
+            mAdapter.setPassEnable(passEnable);
+        }
     }
 
     public boolean isFutureEnable() {
@@ -158,7 +170,7 @@ public class SlidingCalendarView extends LinearLayout {
             }
         }));
 
-        mAdapter = new DateAdpater(mContext, mList, isFutureEnable);
+        mAdapter = new DateAdpater(mContext, mList, isFutureEnable,isPassEnable);
         mAdapter.setListener(new DateAdpater.OnClickDayListener() {
             @Override
             public void onClickDay(View view, DateInfoBean bean, int position) {

@@ -18,7 +18,8 @@ public class SelectDateActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_date);
         scv = findViewById(R.id.scv_main);
-        scv.setFutureEnable(false);
+        scv.setFutureEnable(true);
+        scv.setPassEnable(false);
     }
 
     @Override
