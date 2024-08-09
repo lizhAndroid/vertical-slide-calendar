@@ -32,7 +32,7 @@ public class SlidingCalendarView extends LinearLayout {
     private int futureMonths = 3;
 
     private Context mContext;
-    private boolean isShowWeek, isFutureEnable,isPassEnable;
+    private boolean isShowWeek, isFutureEnable, isPassEnable;
     private GridLayoutManager mLayoutManager;
     private RecyclerView mDateView;
 
@@ -170,7 +170,7 @@ public class SlidingCalendarView extends LinearLayout {
             }
         }));
 
-        mAdapter = new DateAdpater(mContext, mList, isFutureEnable,isPassEnable);
+        mAdapter = new DateAdpater(mContext, mList, isFutureEnable, isPassEnable);
         mAdapter.setListener(new DateAdpater.OnClickDayListener() {
             @Override
             public void onClickDay(View view, DateInfoBean bean, int position) {
@@ -384,18 +384,18 @@ public class SlidingCalendarView extends LinearLayout {
      * 初始化默认选择区间
      * endbean为空则以今天为结束
      *
-     * @param fristBean
+     * @param startBean
      * @param endBean
      */
-    public void initDate(DateInfoBean fristBean, DateInfoBean endBean) {
-        if (fristBean == null || mTodayBean == null) {
+    public void initDate(DateInfoBean startBean, DateInfoBean endBean) {
+        if (startBean == null || mTodayBean == null) {
             return;
         }
-        if (endBean == null) {
-            refreshChooseUi(fristBean, mTodayBean);
-        } else {
-            refreshChooseUi(fristBean, endBean);
+        for (DateInfoBean dateInfoBean : mList) {
+            dateInfoBean.setChooseDay(dateInfoBean.dateToString().equals(startBean.dateToString())
+                    || dateInfoBean.dateToString().equals(endBean.dateToString()));
         }
+        refreshChooseUi(startBean, endBean);
     }
 
     /**
@@ -498,7 +498,7 @@ public class SlidingCalendarView extends LinearLayout {
         if (AppDateTools.diffTime2diffDay(Math.abs(diffLongTime)) > maxRange) {
             return -1;
         }
-        return selectLongTime - firstLongTime > 0 ? 1 : 0;
+        return selectLongTime - firstLongTime >= 0 ? 1 : 0;
     }
 
     /**
@@ -616,6 +616,14 @@ public class SlidingCalendarView extends LinearLayout {
     public void setShowWeek(boolean showWeek) {
         isShowWeek = showWeek;
         init();
+    }
+
+    public void setStartBean(DateInfoBean startBean) {
+        mStartBean = startBean;
+    }
+
+    public void setEndBean(DateInfoBean endBean) {
+        mEndBean = endBean;
     }
 
     public DateInfoBean getStartBean() {

@@ -18,8 +18,18 @@ public class SelectDateActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_date);
         scv = findViewById(R.id.scv_main);
-        scv.setFutureEnable(true);
-        scv.setPassEnable(false);
+        scv.setAllowRange(true);
+//        scv.setFutureEnable(true);
+//        scv.setPassEnable(false);
+/*        DateInfoBean dateInfoBean = new DateInfoBean();
+        dateInfoBean.setYear(2024);
+        dateInfoBean.setMonth(8);
+        dateInfoBean.setDate(3);
+        DateInfoBean dateInfoBean2 = new DateInfoBean();
+        dateInfoBean2.setYear(2024);
+        dateInfoBean2.setMonth(8);
+        dateInfoBean2.setDate(3);
+        scv.initDate(dateInfoBean,dateInfoBean2);*/
     }
 
     @Override
@@ -37,7 +47,7 @@ public class SelectDateActivity extends Activity {
         if (startBean == null) {
             return;
         }
-        if (endBean == null){
+        if (endBean == null) {
             endBean = startBean;
         }
 
