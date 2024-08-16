@@ -37,7 +37,7 @@ public class SlidingCalendarView extends LinearLayout {
     private RecyclerView mDateView;
 
     private List<DateInfoBean> mList;
-    private DateAdpater mAdapter;
+    private DateAdapter mAdapter;
 
     private DateInfoBean mStartBean;
     private DateInfoBean mEndBean;
@@ -170,8 +170,8 @@ public class SlidingCalendarView extends LinearLayout {
             }
         }));
 
-        mAdapter = new DateAdpater(mContext, mList, isFutureEnable, isPassEnable);
-        mAdapter.setListener(new DateAdpater.OnClickDayListener() {
+        mAdapter = new DateAdapter(mContext, mList, isFutureEnable, isPassEnable);
+        mAdapter.setListener(new DateAdapter.OnClickDayListener() {
             @Override
             public void onClickDay(View view, DateInfoBean bean, int position) {
                 //点击日期的listener
@@ -391,10 +391,6 @@ public class SlidingCalendarView extends LinearLayout {
         if (startBean == null || mTodayBean == null) {
             return;
         }
-        for (DateInfoBean dateInfoBean : mList) {
-            dateInfoBean.setChooseDay(dateInfoBean.dateToString().equals(startBean.dateToString())
-                    || dateInfoBean.dateToString().equals(endBean.dateToString()));
-        }
         refreshChooseUi(startBean, endBean);
     }
 
@@ -495,10 +491,10 @@ public class SlidingCalendarView extends LinearLayout {
         long firstLongTime = AppDateTools.getStringToDate(firstBean.dateToString());
         long selectLongTime = AppDateTools.getStringToDate(bean.dateToString());
         long diffLongTime = selectLongTime - firstLongTime;
-        if (AppDateTools.diffTime2diffDay(Math.abs(diffLongTime)) > maxRange) {
+        if (AppDateTools.diffTime2diffDay(Math.abs(diffLongTime)) >= maxRange) {
             return -1;
         }
-        return selectLongTime - firstLongTime >= 0 ? 1 : 0;
+        return selectLongTime - firstLongTime > 0 ? 1 : 0;
     }
 
     /**
@@ -560,7 +556,11 @@ public class SlidingCalendarView extends LinearLayout {
      * @param endBean
      */
     private void refreshChooseUi(DateInfoBean startBean, DateInfoBean endBean) {
-        for (DateInfoBean bean : mList) {
+        List<DateInfoBean> dateInfoBeans = mList.subList(mList.indexOf(startBean), mList.indexOf(endBean) + 1);
+        clearAndSetStartDate(startBean);
+        for (DateInfoBean bean : dateInfoBeans) {
+            bean.setChooseDay(bean.dateToString().equals(startBean.dateToString())
+                    || bean.dateToString().equals(endBean.dateToString()));
             if (bean.getType() == DateInfoBean.TYPE_DATE_NORMAL) {
                 if (bean.isChooseDay()) {
                     if (isSameDay(startBean, bean)) {

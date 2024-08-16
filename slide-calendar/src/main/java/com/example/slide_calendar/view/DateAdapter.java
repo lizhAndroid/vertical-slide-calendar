@@ -16,7 +16,7 @@ import com.example.slide_calendar.bean.DateInfoBean;
 import java.util.Calendar;
 import java.util.List;
 
-public class DateAdpater extends RecyclerView.Adapter<DateAdpater.ViewHolder> {
+public class DateAdapter extends RecyclerView.Adapter<DateAdapter.ViewHolder> {
 
     private Context mContext;
     private List<DateInfoBean> mList;
@@ -42,7 +42,7 @@ public class DateAdpater extends RecyclerView.Adapter<DateAdpater.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public DateAdpater(Context context, List<DateInfoBean> list, boolean isFutureEnable,boolean isPassEnable) {
+    public DateAdapter(Context context, List<DateInfoBean> list, boolean isFutureEnable, boolean isPassEnable) {
         mContext = context;
         mList = list;
         mIsFutureEnable = isFutureEnable;

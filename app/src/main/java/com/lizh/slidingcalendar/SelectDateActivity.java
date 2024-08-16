@@ -21,15 +21,15 @@ public class SelectDateActivity extends Activity {
         scv.setAllowRange(true);
 //        scv.setFutureEnable(true);
 //        scv.setPassEnable(false);
-/*        DateInfoBean dateInfoBean = new DateInfoBean();
+        DateInfoBean dateInfoBean = new DateInfoBean();
         dateInfoBean.setYear(2024);
         dateInfoBean.setMonth(8);
         dateInfoBean.setDate(3);
         DateInfoBean dateInfoBean2 = new DateInfoBean();
         dateInfoBean2.setYear(2024);
         dateInfoBean2.setMonth(8);
-        dateInfoBean2.setDate(3);
-        scv.initDate(dateInfoBean,dateInfoBean2);*/
+        dateInfoBean2.setDate(5);
+        scv.initDate(dateInfoBean,dateInfoBean2);
     }
 
     @Override

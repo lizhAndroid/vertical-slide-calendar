@@ -74,7 +74,7 @@ public class CalendarDateDecoration extends RecyclerView.ItemDecoration {
         int childCount = parent.getChildCount();
         int left = parent.getPaddingLeft();
         int right = parent.getWidth() - parent.getPaddingRight();
-        com.example.slide_calendar.view.DateAdpater adpater = (com.example.slide_calendar.view.DateAdpater) parent.getAdapter();
+        DateAdapter adpater = (DateAdapter) parent.getAdapter();
         for (int i = 0; i < childCount; i++) {
             View view = parent.getChildAt(i);
             int pos = parent.getChildAdapterPosition(view);

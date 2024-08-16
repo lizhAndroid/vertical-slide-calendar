@@ -1,5 +1,7 @@
 package com.example.slide_calendar.bean;
 
+import java.util.Objects;
+
 public class DateInfoBean {
     //view类型：空白，年月标题，日期
     public static final int TYPE_DATE_BLANK = 0;
@@ -145,5 +147,23 @@ public class DateInfoBean {
     public String monthToString() {
         String sMonth = month < 10 ? String.format("0%d", month) : String.format("%d", month);
         return year + "年" + sMonth + "月";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DateInfoBean that = (DateInfoBean) o;
+
+        return dateToString().equals(that.dateToString());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = year;
+        result = 31 * result + month;
+        result = 31 * result + date;
+        return result;
     }
 }
